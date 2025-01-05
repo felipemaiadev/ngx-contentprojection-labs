@@ -131,9 +131,23 @@ export class GestaoMainComponent implements OnInit{
  
     this.rows = rowsMod;
 
-    this.rowsRx.update((value) => [...rowsMod])
+    this.rowsRx.update((value) => [...value])
 
     // console.table(this.rowsRx)
+
+  }
+
+  AddMember()
+  {
+    this.rowsRx.update((value) => {
+      const lastId = value.at(-1);
+      const newMember = {id: lastId.id + 1, name: "Fulano Maia", skills: "Back;Front;Devops;Pedreiro;Ladrilheiro", age: 45, disable: false}
+      return [...value, newMember ]
+    })
+  }
+
+  RemoveMember()
+  {
 
   }
 
