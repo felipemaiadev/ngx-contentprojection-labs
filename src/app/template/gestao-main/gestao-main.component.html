@@ -11,16 +11,97 @@
         <button class="btn btn-info btn-nav-control mx-2" (click)="OpenOptionOne()">TIME - C</button>
         <button class="btn btn-info btn-nav-control mx-2" (click)="OpenOptionOne()">TIME - D</button>
     </div>
-    <ng-template #contentTpl>
+
+    <!-- <ng-template #contentTpl>
         <app-table-row />
-    </ng-template>
-    
-    <ng-container
+    </ng-template>   -->
+
+   <content></content>  
+
+    <!-- <ng-container
             [ngComponentOutlet]="component"
             [ngComponentOutletInputs]="componentInputs"
-            [ngComponentOutletContent]="content"></ng-container>
+            [ngComponentOutletContent]="content"></ng-container> -->
 
 
-</div>
+            <ngx-datatable
+            #myTable
+            class="material expandable"
+            [columnMode]="ColumnMode.force"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="50"
+            [scrollbarV]="false"
+            [rows]="rows"
+            (page)="onPage($event)"
+          >
+            <!-- Row Detail Template -->
+            <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
+              <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                <div style="padding-left:35px;">
+                  <div><strong>skills</strong></div>
+                  <div>{{ row.skills }}, {{ row.skills}}</div>
+                </div>
+              </ng-template>
+            </ngx-datatable-row-detail>
+
+            
+             <!-- Column Templates -->
+        <ngx-datatable-column
+        [width]="50"
+        [resizeable]="false"
+        [sortable]="false"
+        [draggable]="false"
+        [canAutoResize]="false"
+      >
+           <!-- Row Detail Template -->
+        <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+          <a
+            href="javascript:void(0)"
+            [class.datatable-icon-right]="!expanded"
+            [class.datatable-icon-down]="expanded"
+            title="Expand/Collapse Row"
+            (click)="toggleExpandRow(row)"
+          >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        
+        <ngx-datatable-column name="Index" [width]="80">
+          <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+            <strong>{{ rowIndex }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Expanded" [width]="80">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <strong>{{ expanded === 1 }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Name" [width]="200">
+          <ng-template let-value="value" ngx-datatable-cell-template>
+            <strong>{{ value }}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Skills" [width]="300">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <i [innerHTML]="row['skills']"></i>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Age"></ngx-datatable-column>
+      
+        <ngx-datatable-column name="Actions" prop="actions">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [checked]="row.disable == true"  (change)="ChangeToggleState(row)"> {{row.disable === true}}
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
 
 <router-outlet></router-outlet>
+</div>
