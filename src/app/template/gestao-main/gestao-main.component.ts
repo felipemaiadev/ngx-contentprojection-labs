@@ -1,17 +1,19 @@
-import { Component, inject, OnInit, TemplateRef, Type, ViewChild, viewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { NgComponentOutlet, NgFor, NgIf,  } from '@angular/common';
+import { Component, effect, inject, OnInit, signal, TemplateRef, Type, ViewChild, viewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { CommonModule, NgComponentOutlet, NgFor, NgIf,  } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { TableRowComponent } from '../table-row/table-row.component';
 import { TableRowTwoComponent } from '../table-row-two/table-row-two.component';
 import { TableRowThreeComponent } from '../table-row-three/table-row-three.component';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 
 
 import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-gestao-main',
-  imports: [RouterOutlet, NgComponentOutlet, TableRowComponent, TableRowComponent, NgxDatatableModule, NgIf],
+  imports: [RouterOutlet, NgComponentOutlet, TableRowComponent, TableRowComponent, NgxDatatableModule, NgIf, CommonModule],
   templateUrl: './gestao-main.component.html',
   styleUrl: './gestao-main.component.css',
   encapsulation: ViewEncapsulation.None
@@ -21,6 +23,10 @@ export class GestaoMainComponent implements OnInit{
   @ViewChild('myTable') table: any;
 
   rows: any[] = [];
+
+  rowsRx = signal<any[]>([]);
+
+  rows$?: Observable<any[]>;
 
   row = [{id: 0, name: "Felipe Maia", skills: "Back;Front;Devops", age: 25, disable: true } ,
         {id: 1,name: "Pedro Henrique", skills: "Back;Devops", age: 35, disable: false},
@@ -50,6 +56,13 @@ export class GestaoMainComponent implements OnInit{
   constructor() {
 
     this.rows = this.row;
+    effect(() => console.log(`Rows Atualizadas:${this.rowsRx.length}`), {debugName:"effect in rows"});
+
+    this.rows$ = toObservable(this.rowsRx);
+
+    this.rows$.subscribe((value) => {
+      console.table(value);
+    })
   }
   
 
@@ -76,7 +89,10 @@ export class GestaoMainComponent implements OnInit{
     // this.gridInit();
     // this.vcr.createComponent(TableRowComponent);
     // this.vcr.createEmbeddedView(this.contentTpl()!).rootNodes
-    console.log(this.vcr)
+    // console.log(this.vcr)
+
+    this.rowsRx.update((value) => [...this.rows]);
+
   }
 
 
@@ -105,19 +121,19 @@ export class GestaoMainComponent implements OnInit{
     console.log(row);
     
 
-    console.table(this.rows)
+    // console.table(this.rows)
 
     const rowsMod =  this.rows.map((item) => 
     { 
       if(row.id === item.id) row.disable = item.disable
       return item
     }); 
-
-    console.warn(rowsMod);
  
     this.rows = rowsMod;
 
-    console.table(this.rows)
+    this.rowsRx.update((value) => [...rowsMod])
+
+    // console.table(this.rowsRx)
 
   }
 

@@ -32,7 +32,7 @@
             [footerHeight]="50"
             [rowHeight]="50"
             [scrollbarV]="false"
-            [rows]="rows"
+            [rows]=" rows$  | async"
             (page)="onPage($event)"
           >
             <!-- Row Detail Template -->
