@@ -29,9 +29,9 @@ export class GestaoMainComponent implements OnInit{
   rows$?: Observable<any[]>;
 
   row = [{id: 0, name: "Felipe Maia", skills: "Back;Front;Devops", age: 25, disable: true } ,
-        {id: 1,name: "Pedro Henrique", skills: "Back;Devops", age: 35, disable: false},
-        {id: 2,name: "Jose Marcos", skills: "Back;Cloud", age: 38, disable: true},
-        {id: 3,name: "Jose Marcos", skills: "Back;Cloud", age: 38, disable: false}]
+        {id: 1,name: "G. Allejo", skills: "Back;Devops", age: 35, disable: false},
+        {id: 2,name: "Ariel Ortega", skills: "Back;Cloud", age: 38, disable: true},
+        {id: 3,name: "Diego Armando", skills: "Back;Cloud", age: 38, disable: false}]
   
    columns = [{ name:"name", prop: "name", width:"100px" }, { name:"skills", prop: "skills", width:"100px"  }, { name:"age", prop: "age", width:"100px"  }, {prop: 'actions', name: 'Actions'}];
   
