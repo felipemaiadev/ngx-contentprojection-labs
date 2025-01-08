@@ -21,6 +21,16 @@
         <app-table-row />
     </ng-template>   -->
 
+    <ng-select
+      [items]="row"
+      [multiple]="true"
+      bindLabel="name"
+      bindValue="name"
+      [(ngModel)]="selectNames"
+      (close)="closeSelection()"
+    >
+    </ng-select>
+
    <content class="col-6 justify-content-center"></content>  
 
     <!-- <ng-container

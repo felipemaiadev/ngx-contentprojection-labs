@@ -8,12 +8,23 @@ import { toObservable } from '@angular/core/rxjs-interop';
 
 
 
+
 import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-gestao-main',
-  imports: [RouterOutlet, NgComponentOutlet, TableRowComponent, TableRowComponent, NgxDatatableModule, NgIf, CommonModule],
+  imports: [RouterOutlet, 
+            FormsModule, 
+            NgSelectModule, 
+            NgComponentOutlet, 
+            TableRowComponent, 
+            TableRowComponent, 
+            NgxDatatableModule, 
+            NgIf, 
+            CommonModule],
   templateUrl: './gestao-main.component.html',
   styleUrl: './gestao-main.component.css',
   encapsulation: ViewEncapsulation.None
@@ -27,6 +38,8 @@ export class GestaoMainComponent implements OnInit{
   rowsRx = signal<any[]>([]);
 
   rows$?: Observable<any[]>;
+
+  selectNames?: Array<string>;
 
   row = [{id: 0, name: "Felipe Maia", skills: "Back;Front;Devops", age: 25, disable: true } ,
         {id: 1,name: "G. Allejo", skills: "Back;Devops", age: 35, disable: false},
@@ -149,6 +162,11 @@ export class GestaoMainComponent implements OnInit{
   RemoveMember()
   {
 
+  }
+
+  closeSelection()
+  {
+    console.log(this.selectNames);
   }
 
   // gridInit() {

@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "^19.0.5",
     "@angular/router": "^19.0.5",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@ng-select/ng-select": "^14.0.1",
+    "@ngrx/signals": "^19.0.0",
     "@swimlane/ngx-datatable": "^20.1.0",
     "angular-datatables": "^19.0.0",
     "bootstrap": "^5.3.3",

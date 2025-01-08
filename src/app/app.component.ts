@@ -2,6 +2,8 @@ import { Component, inject, TemplateRef, ViewChild, viewChild } from '@angular/c
 import { RouterOutlet } from '@angular/router';
 import { TemplateModule } from './template/template.module';
 import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule} from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-root',
