@@ -27,8 +27,9 @@
               }
             ],
             "styles": [
-               "src/styles.css",
-               "node_modules/bootstrap/dist/css/bootstrap.css"
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.js"
@@ -88,10 +89,10 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css",
               "assets/app.css",
               "assets/icons.css"
-
             ],
             "scripts": []
           }

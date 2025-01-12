@@ -15,13 +15,14 @@
     <div class="col-4 d-flex justify-content-center m-4">
       <button class="btn btn-info btn-nav-control mx-2" (click)="AddMember()">+ Member</button>
       <button class="btn btn-info btn-nav-control mx-2" (click)="RemoveMember()">- Member</button>
+      <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button>
   </div>
 
     <!-- <ng-template #contentTpl>
         <app-table-row />
     </ng-template>   -->
 
-    <ng-select
+    <!-- <ng-select
       [items]="row"
       [multiple]="true"
       bindLabel="name"
@@ -29,7 +30,7 @@
       [(ngModel)]="selectNames"
       (close)="closeSelection()"
     >
-    </ng-select>
+    </ng-select> -->
 
    <content class="col-6 justify-content-center"></content>  
 
@@ -108,7 +109,7 @@
 
         <ngx-datatable-column name="Age"></ngx-datatable-column>
       
-        <ngx-datatable-column name="Actions" prop="actions">
+        <ngx-datatable-column name="Active" prop="Active">
           <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [checked]="row.disable == true"  (change)="ChangeToggleState(row)"> {{row.disable === true}}
@@ -116,7 +117,18 @@
           </ng-template>
         </ngx-datatable-column>
 
+        
+        <!-- <ngx-datatable-column name="Actions" prop="actions">
+          <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+            <div class="form-check form-switch">
+              <mat-icon class="mat-icon-rtl-mirror"></mat-icon>
+            </div>
+          </ng-template>
+        </ngx-datatable-column> -->
+
+
       </ngx-datatable>
 
 <router-outlet></router-outlet>
 </div>
+

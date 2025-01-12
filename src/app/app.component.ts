@@ -4,6 +4,7 @@ import { TemplateModule } from './template/template.module';
 import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule} from '@ng-select/ng-select';
+import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',

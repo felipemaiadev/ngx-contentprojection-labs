@@ -13,6 +13,12 @@ import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { UserService } from '../services/user.service';
+import { User } from '../models/entities/user.model';
+import { DataService } from '../services/data.service';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from '../modal-time/modal-time.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gestao-main',
@@ -23,6 +29,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
             TableRowComponent, 
             TableRowComponent, 
             NgxDatatableModule, 
+            MatIconModule,
             NgIf, 
             CommonModule],
   templateUrl: './gestao-main.component.html',
@@ -33,6 +40,8 @@ export class GestaoMainComponent implements OnInit{
 
   @ViewChild('myTable') table: any;
 
+  users$?: Observable<Array<User>>;
+
   rows: any[] = [];
 
   rowsRx = signal<any[]>([]);
@@ -40,6 +49,8 @@ export class GestaoMainComponent implements OnInit{
   rows$?: Observable<any[]>;
 
   selectNames?: Array<string>;
+
+  closeResult = '';
 
   row = [{id: 0, name: "Felipe Maia", skills: "Back;Front;Devops", age: 25, disable: true } ,
         {id: 1,name: "G. Allejo", skills: "Back;Devops", age: 35, disable: false},
@@ -66,7 +77,9 @@ export class GestaoMainComponent implements OnInit{
     ]
   }
  
-  constructor() {
+  constructor(private userService: UserService,
+              private modal: NgbModal, 
+  ) {
 
     this.rows = this.row;
     effect(() => console.log(`Rows Atualizadas:${this.rowsRx.length}`), {debugName:"effect in rows"});
@@ -76,9 +89,11 @@ export class GestaoMainComponent implements OnInit{
     this.rows$.subscribe((value) => {
       console.table(value);
     })
-  }
-  
 
+    this.users$ = this.userService.ListUsers();
+
+    this.users$.subscribe((users) => console.log(users))
+  }
 
 
   onPage(e:any){
@@ -167,6 +182,31 @@ export class GestaoMainComponent implements OnInit{
   closeSelection()
   {
     console.log(this.selectNames);
+  }
+
+
+  open() {
+    const modalRef = this.modal.open(ModalComponent, {
+      centered: true,
+			backdrop: 'static',
+			ariaLabelledBy: 'modal-title'
+		});
+
+    modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   // gridInit() {
