@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Optional, Self } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
@@ -9,12 +9,17 @@ import { User } from '../models/entities/user.model';
 
 
 @Component({
+  selector: `modal-edit-colaborador`,
   templateUrl: './modal-time.component.html',
   styleUrls: ['./modal-time.component.css'],
   imports:[NgSelectComponent, CommonModule]
 })
 export class ModalComponent implements OnInit {
-  people: any = [];
+  
+  
+  @Input() modalRef?: NgbModalRef
+  
+  skills: any = [];
   selected: any;
   constructor(
     public activeModal: NgbActiveModal,
@@ -22,8 +27,9 @@ export class ModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.people = this.dataService.getPeople("");
-    // this.people = of([]);
+    this.skills = this.dataService.getSkills("");
+    // this.skills = of([]);
+    console.log(this.activeModal)
   }
 
   close(reason: string): void {

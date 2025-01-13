@@ -6,16 +6,15 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DataService } from './services/data.service';
+
 import {MatIconModule} from '@angular/material/icon';
-
-
-
+ 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgSelectModule, 
+    NgSelectModule,
     MatIconModule,
     NgxDatatableModule.forRoot({
       messages: {

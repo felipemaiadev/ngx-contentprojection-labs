@@ -15,7 +15,7 @@
     <div class="col-4 d-flex justify-content-center m-4">
       <button class="btn btn-info btn-nav-control mx-2" (click)="AddMember()">+ Member</button>
       <button class="btn btn-info btn-nav-control mx-2" (click)="RemoveMember()">- Member</button>
-      <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button>
+      <!-- <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button> -->
   </div>
 
     <!-- <ng-template #contentTpl>
@@ -55,8 +55,8 @@
             <ngx-datatable-row-detail [rowHeight]="100" #myDetailRow (toggle)="onDetailToggle($event)">
               <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
                 <div style="padding-left:35px;">
-                  <div><strong>skills</strong></div>
-                  <div>{{ row.skills }}, {{ row.skills}}</div>
+                  <div><strong>Skills</strong></div>
+                  <div> {{ getSkills(row) }} </div>
                 </div>
               </ng-template>
             </ngx-datatable-row-detail>
@@ -103,7 +103,7 @@
 
         <ngx-datatable-column name="Skills" [width]="300">
           <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-            <i [innerHTML]="row['skills']"></i>
+            <i [innerHTML]="getSkills(row)"></i>
           </ng-template>
         </ngx-datatable-column>
 
@@ -118,16 +118,20 @@
         </ngx-datatable-column>
 
         
-        <!-- <ngx-datatable-column name="Actions" prop="actions">
+        <ngx-datatable-column name="Actions" prop="actions">
           <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-            <div class="form-check form-switch">
-              <mat-icon class="mat-icon-rtl-mirror"></mat-icon>
+            <div class="form-check form-switch btn btn-primary">
+              <mat-icon class="mat-icon-rtl-mirror"   fontIcon="edit" (click)="open(row)"></mat-icon>
             </div>
           </ng-template>
-        </ngx-datatable-column> -->
-
+        </ngx-datatable-column>
 
       </ngx-datatable>
+
+      <ng-template #modalEdit>
+        <modal-edit-colaborador [modalRef]="modalRef"></modal-edit-colaborador>
+      </ng-template>
+
 
 <router-outlet></router-outlet>
 </div>

@@ -17,6 +17,14 @@ export interface Person {
     disabled?: boolean;
 }
 
+export interface  Skill {
+    id: number;
+    index: number;
+    isActive: boolean;
+    area: string;
+    subarea: string;
+}
+
 @Injectable({
     providedIn: 'any'
 })
@@ -42,6 +50,14 @@ export class DataService {
 
     getPeople(term: string): Observable<Person[]> {
         let items = getMockPeople();
+        if (term) {
+            items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
+        }
+        return of(items).pipe(delay(500));
+    }
+
+    getSkills(term: string): Observable<Skill[]> {
+        let items = getMockSkills();
         if (term) {
             items = items.filter(x => x.name.toLocaleLowerCase().indexOf(term.toLocaleLowerCase()) > -1);
         }
@@ -245,5 +261,64 @@ function getMockPeople() {
             'email': 'diannbooker@lyria.com',
             'phone': '+1 (830) 555-3209'
         }
+    ]
+}
+
+function getMockSkills() {
+    return [
+        {
+            'id': 1,
+            'index': 1,
+            'isActive': true,
+            'name': 'Grafana',
+            'area': 'DevOps',
+            'subarea': 'Monitoring',
+      
+        },
+        {
+            'id': 2,
+            'index': 2,
+            'isActive': true,
+            'name': 'Kubernets',
+            'area': 'DevOps',
+            'subarea': 'Operation',
+      
+        },
+        {
+            'id': 3,
+            'index': 3,
+            'isActive': true,
+            'name': 'Docker',
+            'area': 'DevOps',
+            'subarea': 'Operation',
+      
+        }, 
+        {
+            'id': 4,
+            'index': 4,
+            'isActive': true,
+            'name': 'Argo CI',
+            'area': 'DevOps',
+            'subarea': 'Depoly',
+      
+        },
+        {
+            'id': 5,
+            'index': 5,
+            'isActive': true,
+            'name': 'AWS SQS',
+            'area': 'Cloud',
+            'subarea': 'Message',
+      
+        },
+        {
+            'id': 5,
+            'index': 5,
+            'isActive': true,
+            'name': 'Azure ServiceBus',
+            'area': 'Cloud',
+            'subarea': 'Message',
+      
+        },
     ]
 }

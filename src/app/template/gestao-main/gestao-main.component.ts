@@ -16,22 +16,23 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { UserService } from '../services/user.service';
 import { User } from '../models/entities/user.model';
 import { DataService } from '../services/data.service';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalComponent } from '../modal-time/modal-time.component';
-import { MatIconModule } from '@angular/material/icon';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-gestao-main',
   imports: [RouterOutlet, 
             FormsModule, 
-            NgSelectModule, 
+            NgSelectModule,
+            MatIconModule,
             NgComponentOutlet, 
             TableRowComponent, 
             TableRowComponent, 
             NgxDatatableModule, 
-            MatIconModule,
             NgIf, 
-            CommonModule],
+            CommonModule,
+            ModalComponent],
   templateUrl: './gestao-main.component.html',
   styleUrl: './gestao-main.component.css',
   encapsulation: ViewEncapsulation.None
@@ -39,6 +40,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class GestaoMainComponent implements OnInit{
 
   @ViewChild('myTable') table: any;
+
+  modalRef?: NgbModalRef;
 
   users$?: Observable<Array<User>>;
 
@@ -52,10 +55,10 @@ export class GestaoMainComponent implements OnInit{
 
   closeResult = '';
 
-  row = [{id: 0, name: "Felipe Maia", skills: "Back;Front;Devops", age: 25, disable: true } ,
-        {id: 1,name: "G. Allejo", skills: "Back;Devops", age: 35, disable: false},
-        {id: 2,name: "Ariel Ortega", skills: "Back;Cloud", age: 38, disable: true},
-        {id: 3,name: "Diego Armando", skills: "Back;Cloud", age: 38, disable: false}]
+  row = [{id: 0, name: "Felipe Maia", skills: [{id: 1, name: "Docker" },{id:2, name:"Kubernets"}], age: 25, disable: true } ,
+        {id: 1,name: "G. Allejo", skills: [{id: 1, name: "Docker" },{id:3, name:"Argo CI"}], age: 35, disable: false},
+        {id: 2,name: "Ariel Ortega", skills: [{id: 1, name: "Docker" },{id:4, name:"Grafana"}], age: 38, disable: true},
+        {id: 3,name: "Diego Armando", skills: [{id: 1, name: "Docker" },{id:2, name:"Kubernets"}], age: 38, disable: false}]
   
    columns = [{ name:"name", prop: "name", width:"100px" }, { name:"skills", prop: "skills", width:"100px"  }, { name:"age", prop: "age", width:"100px"  }, {prop: 'actions', name: 'Actions'}];
   
@@ -174,6 +177,16 @@ export class GestaoMainComponent implements OnInit{
     })
   }
 
+ getSkills(row:any)
+ {
+  const { skills } = row
+  console.log(skills)
+  const resumoSkills =  skills.map(({ name }: any) =>  name )
+  console.log(resumoSkills)
+  return resumoSkills
+ }
+ 
+
   RemoveMember()
   {
 
@@ -185,14 +198,19 @@ export class GestaoMainComponent implements OnInit{
   }
 
 
-  open() {
-    const modalRef = this.modal.open(ModalComponent, {
+
+
+  open(row: any) {
+    this.modalRef = this.modal.open(ModalComponent, {
       centered: true,
 			backdrop: 'static',
-			ariaLabelledBy: 'modal-title'
+			ariaLabelledBy: 'edit',
+      
 		});
 
-    modalRef.result.then((result) => {
+    console.log(row)
+
+    this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

@@ -12,112 +12,31 @@
     </div>
     <div class="modal-body">
       <form class="form-horizontal">
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
+        <div class="form-group mt-4">
+          <label for="dateOfBirth">Name</label>
           <div class="input-group">
             <input
+             type="text"
               id="dateOfBirth"
               class="form-control"
-              placeholder="yyyy-mm-dd"
               name="dp"
-              ngbDatepicker
             />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                type="button"
-              ></button>
-            </div>
           </div>
         </div>
         <div class="form-group acc-allSiteContainer" id="allSiteId">
-          <div class="row">
+          <div class="row mt-4">
             <label id="acc-panelSiteLabel" class="col-sm-3 control-label"
-              >NG Select Label</label
+              >SKILLs</label
             >
             <div class="col-sm-9">
               <ng-select
-                [items]="people | async"
-                bindLabel="company"
+                [items]="skills | async"
+                bindLabel="name"
                 placeholder="Select item"
                 [closeOnSelect]="false"
                 [multiple]="true"
               >
               </ng-select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                type="button"
-              ></button>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                type="button"
-              ></button>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                
-                type="button"
-              ></button>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateOfBirth">Date of birth</label>
-          <div class="input-group">
-            <input
-              id="dateOfBirth"
-              class="form-control"
-              placeholder="yyyy-mm-dd"
-              name="dp"
-              ngbDatepicker
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary calendar"
-                
-                type="button"
-              ></button>
             </div>
           </div>
         </div>
