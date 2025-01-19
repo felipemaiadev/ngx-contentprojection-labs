@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { routes } from './template-router.module'
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { DataService } from './services/data.service';
+
 
 import {MatIconModule} from '@angular/material/icon';
  

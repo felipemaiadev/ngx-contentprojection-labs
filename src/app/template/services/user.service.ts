@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import {  Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "../models/entities/user.model";
 
@@ -8,13 +8,13 @@ import { User } from "../models/entities/user.model";
 })
 export class UserService {
 
-    
+
     constructor(private http: HttpClient) {
     }
 
     ListUsers():Observable<Array<User>>
     {
-        return this.http.get<Array<User>>("http://localhost:3000/")
+        return this.http.get<Array<User>>("http://localhost:3001/USERS")
         // https://jsonplaceholder.typicode.com/users
     }
 }

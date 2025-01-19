@@ -13,26 +13,24 @@ import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UserService } from '../services/user.service';
-import { User } from '../models/entities/user.model';
-import { DataService } from '../services/data.service';
+import { UserService } from '@template/services/user.service';
+import { User } from '@template/models/entities/user.model';
+import { DataService } from '@template/services/data.service';
 import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ModalComponent } from '../modal-time/modal-time.component';
+import { ModalComponent } from '@template/modal-time/modal-time.component';
 import {MatIconModule} from '@angular/material/icon';
+import { ModalNovoColabordorComponent } from '@template/modal-time-novo/modal-time-novo.component';
 
 @Component({
   selector: 'app-gestao-main',
-  imports: [RouterOutlet, 
-            FormsModule, 
+  imports: [RouterOutlet,
+            FormsModule,
             NgSelectModule,
             MatIconModule,
-            NgComponentOutlet, 
-            TableRowComponent, 
-            TableRowComponent, 
-            NgxDatatableModule, 
-            NgIf, 
+            NgxDatatableModule,
             CommonModule,
-            ModalComponent],
+            ModalComponent,
+            ModalNovoColabordorComponent],
   templateUrl: './gestao-main.component.html',
   styleUrl: './gestao-main.component.css',
   encapsulation: ViewEncapsulation.None
@@ -59,19 +57,19 @@ export class GestaoMainComponent implements OnInit{
         {id: 1,name: "G. Allejo", skills: [{id: 1, name: "Docker" },{id:3, name:"Argo CI"}], age: 35, disable: false},
         {id: 2,name: "Ariel Ortega", skills: [{id: 1, name: "Docker" },{id:4, name:"Grafana"}], age: 38, disable: true},
         {id: 3,name: "Diego Armando", skills: [{id: 1, name: "Docker" },{id:2, name:"Kubernets"}], age: 38, disable: false}]
-  
+
    columns = [{ name:"name", prop: "name", width:"100px" }, { name:"skills", prop: "skills", width:"100px"  }, { name:"age", prop: "age", width:"100px"  }, {prop: 'actions', name: 'Actions'}];
-  
+
   timeout?: any;
 
   expanded: any = {};
 
   ColumnMode = ColumnMode;
-  
+
   vcr = inject(ViewContainerRef);
   contentTpl = viewChild<TemplateRef<unknown>>('contentTpl')
   // protected content: Node[][] = [];
-  
+
   protected component: Type<TableRowComponent> | null = null;
   protected componentInputs = {
     suqad: [{ id: 0, name: "Felipe Maia", skills: "Back;Front;Devops"},
@@ -79,9 +77,9 @@ export class GestaoMainComponent implements OnInit{
             { id: 2,name: "Jose Rodrigues", skills: "Back;Cloud"},
     ]
   }
- 
+
   constructor(private userService: UserService,
-              private modal: NgbModal, 
+              private modal: NgbModal,
   ) {
 
     this.rows = this.row;
@@ -90,7 +88,7 @@ export class GestaoMainComponent implements OnInit{
     this.rows$ = toObservable(this.rowsRx);
 
     this.rows$.subscribe((value) => {
-      console.table(value);
+      // console.table(value);
     })
 
     this.users$ = this.userService.ListUsers();
@@ -102,12 +100,12 @@ export class GestaoMainComponent implements OnInit{
   onPage(e:any){
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      console.log('paged!', event);
+      console.log('paged!', e);
     }, 100);
   }
 
   onDetailToggle(e:any){
-    console.log('Detail Toggled', event);
+    console.log('Detail Toggled', e);
   }
 
   toggleExpandRow(row:any) {
@@ -150,16 +148,16 @@ export class GestaoMainComponent implements OnInit{
     console.log(row);
       row.disable = ! row.disable;
     console.log(row);
-    
+
 
     // console.table(this.rows)
 
-    const rowsMod =  this.rows.map((item) => 
-    { 
+    const rowsMod =  this.rows.map((item) =>
+    {
       if(row.id === item.id) row.disable = item.disable
       return item
-    }); 
- 
+    });
+
     this.rows = rowsMod;
 
     this.rowsRx.update((value) => [...value])
@@ -180,12 +178,12 @@ export class GestaoMainComponent implements OnInit{
  getSkills(row:any)
  {
   const { skills } = row
-  console.log(skills)
+  // console.log(skills)
   const resumoSkills =  skills.map(({ name }: any) =>  name )
-  console.log(resumoSkills)
+  // console.log(resumoSkills)
   return resumoSkills
  }
- 
+
 
   RemoveMember()
   {
@@ -205,7 +203,7 @@ export class GestaoMainComponent implements OnInit{
       centered: true,
 			backdrop: 'static',
 			ariaLabelledBy: 'edit',
-      
+
 		});
 
     console.log(row)
@@ -279,6 +277,6 @@ export class GestaoMainComponent implements OnInit{
 
   //     });
   // }
-  
+
 
 }
