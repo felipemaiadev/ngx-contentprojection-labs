@@ -3,7 +3,7 @@ import { Role } from '@template/models/entities/role.model';
 import { User } from '@template/models/entities/user.model';
 import { RoleService } from '@template/services/role.service';
 import { UserService } from '@template/services/user.service';
-import {forkJoin, Observable, switchMap, map} from 'rxjs';
+import {forkJoin, Observable, switchMap, map, mergeMap, mergeAll} from 'rxjs';
 // import  * as R from 'rambda';
 
 @Component({
@@ -46,12 +46,35 @@ export class GestaoEquipeComponent implements OnInit {
   getMergedConsults(): void
   {
     this.userService.ListUsers().pipe(
-      map((users: Array<User>)=> users.map(user => user.UID)),
-      switchMap( ids => {
-            return this.roleService.ListFilterRoles(ids)
-      }),
+      // map((users: Array<User>)=> users.map(user => user)),
+      mergeMap( ids => {
+                this.users = ids;
+                const idsMap = ids.map( user => user.UID );
+                return this.roleService.ListFilterRoles(idsMap)
+                  .pipe(
+                        map((roles: Array<Role>)=> roles.map(role => {
+                          return ({
+                              UID: role.UID,
+                              CLAIMS: role.CLAIMS,
+                          })
+                        }))
+                      )
+              }),
+      map((response) => {
+        return response.map(role => {
+          return ({
+              UID: role.UID,
+              CLAIMS: role.CLAIMS,
+              IsPostBack: true
+            })
+        })
+      })
+    ).subscribe((value ) => {
+     const parsed =  this.users?.map((user: User, idx) => {
+                console.log(value, user);
+        }, value)
+    });
 
-    ).subscribe((value: any) => console.log(value));
   }
 
   onMeger()
