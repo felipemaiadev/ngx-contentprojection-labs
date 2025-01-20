@@ -3,42 +3,48 @@ import { Role } from '@template/models/entities/role.model';
 import { User } from '@template/models/entities/user.model';
 import { RoleService } from '@template/services/role.service';
 import { UserService } from '@template/services/user.service';
-import {forkJoin, Observable, switchMap, map, mergeMap, mergeAll} from 'rxjs';
+import {forkJoin, Observable, switchMap, map, mergeMap, mergeAll, observable} from 'rxjs';
+import {NgSelectComponent} from '@ng-select/ng-select';
+import {AsyncPipe} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 // import  * as R from 'rambda';
 
 @Component({
   selector: 'app-gestao-equipe',
-  imports: [],
+  imports: [
+    NgSelectComponent,
+    AsyncPipe,
+    FormsModule
+  ],
   templateUrl: './gestao-equipe.component.html',
   styleUrl: './gestao-equipe.component.css'
 })
 export class GestaoEquipeComponent implements OnInit {
 
+  selectModel?:any
 
   users$: Observable<Array<User> | null> = new Observable();
   roles$: Observable<Array<Role> | null> = new Observable();
   $users = signal<Array<User> | null>(null);
   $roles = signal<Array<Role> | null>(null);
-  users?: Array<User>;
+  users?: Array<User> = [{UID:100, name:"Joao", age:15, gender:"Male" ,address:{ city:"BLABLA St", state:"BLBLA State"} }]
   roles?: Array<Role> = [];
-
+  usersSelect$ = new Observable<User[]>();
+  rolesSelect$ = new Observable<Role[]>();
 
 //  @SkipSelf() private readonly  userService =  Inject(UserService);
 //  @SkipSelf() private readonly roleService = Inject(RoleService);
 
   constructor(private userService: UserService,
               private readonly roleService: RoleService) {
+    this.usersSelect$ =  this.userService.ListUsers();
+    this.rolesSelect$  = this.roleService.ListRoles();
+    this.users?.push({UID:100, name:"Joao", age:15, gender:"Male" ,address:{ city:"BLABLA St", state:"BLBLA State"} })
   }
 
 
   ngOnInit(): void {
 
-    forkJoin({
-      users: this.userService.ListUsers(),
-      roles: this.roleService.ListRoles(),
-    })
-    // this.userService.ListUsers().subscribe(users => this.users = users);
-    // this.roleService.ListRoles().subscribe(roles => this.roles = roles);
   }
 
 

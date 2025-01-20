@@ -1,5 +1,30 @@
-<p>gestao-equipe works!</p>
 
 <div class="row">
     <button class="col-sm-2 btn btn-primary" (click)="onMeger()"> MERGE </button>
 </div>
+
+<div class="row mt-4">
+
+  <div class="col-sm-2">
+    <ng-select
+     [items]="[{id:0},1,2,3]"
+     loading = true
+     bindValue="`id1`"
+     [(ngModel)]="selectModel">
+    </ng-select>
+  </div>
+
+  <div class="col-sm-2">
+    <ng-select
+      [items]="[{id:0},1,2,3]"
+      bindValue="'id'"
+      bindLabel="'id'">
+    </ng-select>
+  </div>
+
+
+
+</div>
+
+
+
